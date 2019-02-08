@@ -1,0 +1,3 @@
+warn: optional parameter system.cpu.workload:M5_pid not present
+For more information see: http://www.m5sim.org/warn/aa78cda1
+hack: be nice to actually delete the event here

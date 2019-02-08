@@ -1,0 +1,31 @@
+M5 Simulator System
+
+Copyright (c) 2001-2008
+The Regents of The University of Michigan
+All Rights Reserved
+
+
+M5 compiled Feb  7 2019 23:54:13
+M5 revision Unknown
+M5 started Feb  8 2019 00:12:24
+M5 executing on oak
+command line: /home/login/NTNU/ComputerArchitecture/exercises/prefetcher/prefetcher/build/ALPHA_SE/m5.opt --remote-gdb-port=0 -re --outdir=/home/login/NTNU/ComputerArchitecture/exercises/prefetcher/prefetcher/output/galgel-user /home/login/NTNU/ComputerArchitecture/exercises/prefetcher/m5/configs/example/se.py --checkpoint-dir=/home/login/NTNU/ComputerArchitecture/exercises/prefetcher/lib/cp --checkpoint-restore=1000000000 --at-instruction --caches --l2cache --standard-switch --warmup-insts=10000000 --max-inst=10000000 --l2size=1MB --membus-width=8 --membus-clock=400MHz --mem-latency=30ns --bench=galgel --prefetcher=on_access=true:policy=proxy
+Global frequency set at 1000000000000 ticks per second
+Creating prefetcher proxy
+Restoring checkpoint ...
+Restoring from checkpoint
+Done.
+Switch at instruction count:1
+info: Entering event queue @ 524720672000.  Starting simulation...
+Switched CPUS @ cycle = 524720673000
+Changing memory mode to timing
+switching cpus
+Switch at instruction count:10000000
+info: Entering event queue @ 524720673000.  Starting simulation...
+Switching CPUS @ cycle = 540511997000
+Simulation ends instruction count:10000000
+info: Entering event queue @ 540511997000.  Starting simulation...
+switching cpus
+**** REAL SIMULATION ****
+info: Entering event queue @ 540511998000.  Starting simulation...
+Exiting @ cycle 547625370000 because a thread reached the max instruction count
