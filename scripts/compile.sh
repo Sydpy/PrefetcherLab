@@ -8,4 +8,10 @@ SCRIPT_DIR=$(dirname $(readlink -f $0))
 }
 
 cd ${PREFETCHER_FRAMEWORK}/m5
-scons -j2 NO_FAST_ALLOC=False EXTRAS="${SCRIPT_DIR}/../src" "${SCRIPT_DIR}/../build/ALPHA_SE/m5.opt"
+
+if [ $DEBUG ]
+then
+        scons -j2 NO_FAST_ALLOC=False EXTRAS="${SCRIPT_DIR}/../src" "${SCRIPT_DIR}/../build/ALPHA_SE/m5.debug"
+else
+        scons -j2 NO_FAST_ALLOC=False EXTRAS="${SCRIPT_DIR}/../src" "${SCRIPT_DIR}/../build/ALPHA_SE/m5.opt"
+fi

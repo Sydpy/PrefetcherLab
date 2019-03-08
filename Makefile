@@ -2,16 +2,17 @@ include ./scripts/FRAMEWORK
 
 CXX=g++-4.8
 CC=gcc
+DEBUG=0
 
 export
 
 all: compile test
 
 compile:
-	./scripts/compile.sh
+	DEBUG=${DEBUG} ./scripts/compile.sh
 
 test:
-	./scripts/test_prefetcher.py
+	DEBUG=${DEBUG} ./scripts/test_prefetcher.py
 
 
 clean:

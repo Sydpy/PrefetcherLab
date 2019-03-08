@@ -18,14 +18,23 @@ import lib.stats as stats
 
 
 # Set paths
-m5_path(homeDir + '/build/ALPHA_SE/m5.opt')
+if os.environ['DEBUG']:
+    m5_path(homeDir + '/build/ALPHA_SE/m5.debug')
+    m5_args('--trace-flags=HWPrefetch', '--remote-gdb-port=0', '-re')
+    if not os.path.exists(homeDir + '/build/ALPHA_SE/m5.debug'):
+        print >>sys.stderr, "Could not find the M5 binary, run compile.sh to compile with your prefetcher."
+        sys.exit(1)
+    print "Remember to recompile after making changes."
+else:
+    m5_path(homeDir + '/build/ALPHA_SE/m5.opt')
+    if not os.path.exists(homeDir + '/build/ALPHA_SE/m5.opt'):
+        print >>sys.stderr, "Could not find the M5 binary, run compile.sh to compile with your prefetcher."
+        sys.exit(1)
+    print "Remember to recompile after making changes."
+
 se_path(frameDir + '/m5/configs/example/se.py')
 
 # Check that M5 is compiled
-if not os.path.exists(homeDir + '/build/ALPHA_SE/m5.opt'):
-    print >>sys.stderr, "Could not find the M5 binary, run compile.sh to compile with your prefetcher."
-    sys.exit(1)
-print "Remember to recompile after making changes."
 
 # Set output directory
 global_prefix(homeDir + '/output/')
@@ -37,7 +46,6 @@ global_args(
     '--caches', '--l2cache',
     '--standard-switch', '--warmup-insts=%d' % 1e7,
     '--max-inst=%d' % 1e7,
-
     '--l2size=1MB',
     '--membus-width=8', '--membus-clock=400MHz', '--mem-latency=30ns',
 )
@@ -47,7 +55,8 @@ prefetchers = Config('user', ['--prefetcher=on_access=true:policy=proxy'])
 
 # Tests to run
 tests = spec_configs
-#tests = spec_configs[:2]
+if os.environ['DEBUG']:
+    tests = spec_configs[:2]
 
 configs = cross(tests, prefetchers)
 
