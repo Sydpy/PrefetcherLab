@@ -56,7 +56,7 @@ prefetchers = Config('user', ['--prefetcher=on_access=true:policy=proxy'])
 # Tests to run
 tests = spec_configs
 if os.environ['DEBUG']:
-    tests = spec_configs[:2]
+    tests = spec_configs[:1]
 
 configs = cross(tests, prefetchers)
 
