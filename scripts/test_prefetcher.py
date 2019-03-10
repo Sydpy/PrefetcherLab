@@ -10,6 +10,8 @@ homeDir = os.path.realpath(os.path.dirname(os.path.realpath(__file__))+ '/..')
 
 sys.path.append(frameDir)
 
+DEBUG = int(os.getenv('DEBUG', "0"))
+
 from lib.run_util import *
 import lib.stats as stats
 
@@ -18,7 +20,7 @@ import lib.stats as stats
 
 
 # Set paths
-if os.environ['DEBUG']:
+if DEBUG:
     m5_path(homeDir + '/build/ALPHA_SE/m5.debug')
     m5_args('--trace-flags=HWPrefetch', '--remote-gdb-port=0', '-re')
     if not os.path.exists(homeDir + '/build/ALPHA_SE/m5.debug'):
@@ -55,7 +57,7 @@ prefetchers = Config('user', ['--prefetcher=on_access=true:policy=proxy'])
 
 # Tests to run
 tests = spec_configs
-if os.environ['DEBUG']:
+if DEBUG:
     tests = spec_configs[:1]
 
 configs = cross(tests, prefetchers)
