@@ -10,7 +10,7 @@
 #include "interface.hh"
 
 #ifndef MARKOV_TABLE_SIZE
-#define MARKOV_TABLE_SIZE 2048
+#define MARKOV_TABLE_SIZE 4096
 #endif
 
 #ifndef MARKOV_TABLE_DEGREE
@@ -121,6 +121,10 @@ void prefetch_init(void)
 {
     /* Called before any calls to prefetch_access. */
     /* This is the place to initialize data structures. */
+    DPRINTF(HWPrefetch, "*** Markov Prefetcher ***\n");
+    DPRINTF(HWPrefetch, "MARKOV_TABLE_SIZE\t: %d\n", MARKOV_TABLE_SIZE);
+    DPRINTF(HWPrefetch, "MARKOV_TABLE_DEGREE\t: %d\n", MARKOV_TABLE_DEGREE);
+    DPRINTF(HWPrefetch, "*************************\n");
 }
 
 void prefetch_access(AccessStat stat)
@@ -132,8 +136,6 @@ void prefetch_access(AccessStat stat)
 
     if (stat.miss) {
 
-        DPRINTF(HWPrefetch, "Missed %#x\n", addr);
-
         if (!entry) {
             entry = new_entry(addr);
         } else {
@@ -141,7 +143,6 @@ void prefetch_access(AccessStat stat)
             for (i = MARKOV_TABLE_DEGREE-1; i > -1; i--) {
                 pred = entry->predictions[i];
                 if (pred.confidence > 0 && !in_cache(pred.addr)) {
-                    DPRINTF(HWPrefetch, "Prefetching %#x\n", pred.addr);
                     issue_prefetch(pred.addr);
                 }
             }
