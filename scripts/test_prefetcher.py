@@ -10,7 +10,8 @@ homeDir = os.path.realpath(os.path.dirname(os.path.realpath(__file__))+ '/..')
 
 sys.path.append(frameDir)
 
-DEBUG = int(os.getenv('DEBUG', "0"))
+DEBUG = int(os.getenv("DEBUG", "0"))
+TRACE = int(os.getenv("TRACE", "0"))
 
 from lib.run_util import *
 import lib.stats as stats
@@ -22,7 +23,6 @@ import lib.stats as stats
 # Set paths
 if DEBUG:
     m5_path(homeDir + '/build/ALPHA_SE/m5.debug')
-    m5_args('--trace-flags=HWPrefetch', '--remote-gdb-port=0', '-re')
     if not os.path.exists(homeDir + '/build/ALPHA_SE/m5.debug'):
         print >>sys.stderr, "Could not find the M5 binary, run compile.sh to compile with your prefetcher."
         sys.exit(1)
@@ -33,6 +33,9 @@ else:
         print >>sys.stderr, "Could not find the M5 binary, run compile.sh to compile with your prefetcher."
         sys.exit(1)
     print "Remember to recompile after making changes."
+
+if TRACE:
+    m5_args('--trace-flags=HWPrefetch', '--remote-gdb-port=0', '-re')
 
 se_path(frameDir + '/m5/configs/example/se.py')
 

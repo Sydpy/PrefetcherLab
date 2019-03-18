@@ -3,6 +3,7 @@ include ./scripts/FRAMEWORK
 CXX=g++-4.8
 CC=gcc
 DEBUG=0
+TRACE=0
 
 export
 
@@ -12,7 +13,7 @@ compile:
 	DEBUG=${DEBUG} ./scripts/compile.sh
 
 test:
-	DEBUG=${DEBUG} ./scripts/test_prefetcher.py
+	TRACE=${TRACE} DEBUG=${DEBUG} ./scripts/test_prefetcher.py
 
 
 clean:
