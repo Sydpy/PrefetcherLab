@@ -17,6 +17,10 @@
 #define MARKOV_TABLE_DEGREE 4
 #endif
 
+#ifndef CONFIDENCE_THRESHOLD
+#define CONFIDENCE_THRESHOLD 0
+#endif
+
 typedef struct {
     Addr addr; 
     uint8_t confidence; 
@@ -142,7 +146,7 @@ void prefetch_access(AccessStat stat)
         
             for (i = MARKOV_TABLE_DEGREE-1; i > -1; i--) {
                 pred = entry->predictions[i];
-                if (pred.confidence > 0 && !in_cache(pred.addr)) {
+                if (pred.confidence > CONFIDENCE_THRESHOLD && !in_cache(pred.addr)) {
                     issue_prefetch(pred.addr);
                 }
             }
